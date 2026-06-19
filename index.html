@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indragiri Bhakti — Portfolio</title>
+<meta name="description" content="Indragiri Bhakti — Software Engineering Student. Linux, self-hosting, and digital minimalism.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Glyph Strip -->
+  <div class="glyph-strip" id="glyphStrip"></div>
+
+  <!-- Top Bar -->
+  <header class="topbar">
+    <div class="logo">INDRA<span class="accent">.</span></div>
+
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" data-cursor="hover">
+      <span class="toggle-track">
+        <span class="toggle-thumb"></span>
+      </span>
+      <span class="toggle-label" id="toggleLabel">DARK</span>
+    </button>
+  </header>
+
+  <!-- Side Dot Navigation -->
+  <nav class="dot-nav" id="dotNav" aria-label="Section navigation">
+    <button class="dot-nav-item" data-target="profile" data-cursor="hover" aria-label="Go to Profile"><span class="dot-nav-dot"></span><span class="dot-nav-label">PROFILE</span></button>
+    <button class="dot-nav-item" data-target="philosophy" data-cursor="hover" aria-label="Go to Philosophy"><span class="dot-nav-dot"></span><span class="dot-nav-label">PHILOSOPHY</span></button>
+    <button class="dot-nav-item" data-target="system" data-cursor="hover" aria-label="Go to System"><span class="dot-nav-dot"></span><span class="dot-nav-label">SYSTEM</span></button>
+    <button class="dot-nav-item" data-target="skills" data-cursor="hover" aria-label="Go to Skills"><span class="dot-nav-dot"></span><span class="dot-nav-label">SKILLS</span></button>
+    <button class="dot-nav-item" data-target="projects" data-cursor="hover" aria-label="Go to Projects"><span class="dot-nav-dot"></span><span class="dot-nav-label">PROJECTS</span></button>
+    <button class="dot-nav-item" data-target="journey" data-cursor="hover" aria-label="Go to Journey"><span class="dot-nav-dot"></span><span class="dot-nav-label">JOURNEY</span></button>
+    <button class="dot-nav-item" data-target="contact" data-cursor="hover" aria-label="Go to Contact"><span class="dot-nav-dot"></span><span class="dot-nav-label">CONTACT</span></button>
+  </nav>
+
+  <main class="page-content">
+
+    <!-- ============ SECTION 01 — PROFILE ============ -->
+    <div class="section-divider">
+      <span class="divider-index mono">/// 01</span>
+      <span class="divider-line"></span>
+      <span class="divider-title mono">PROFILE</span>
+    </div>
+
+    <section class="bento-grid" id="profile">
+
+      <article class="widget hero-widget dot-bg" data-cursor="hover">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          AVAILABLE FOR WORK
+        </div>
+        <h1 class="hero-name">Indragiri<br>Bhakti</h1>
+        <p class="hero-role">Software Engineering Student</p>
+        <p class="hero-bio">
+          Currently <span class="mono accent" id="ageValue">--</span> years old.
+          I build clean systems on Linux, run my own server stack, and design
+          interfaces with intention rather than noise.
+        </p>
+        <div class="hero-tags">
+          <span class="mini-tag">Web Dev</span>
+          <span class="mini-tag">Linux</span>
+          <span class="mini-tag">Self-Hosting</span>
+          <span class="mini-tag">Digital Minimalism</span>
+        </div>
+      </article>
+
+      <article class="widget now-widget" data-cursor="hover">
+        <p class="widget-label">NOW</p>
+        <ul class="now-list">
+          <li><span class="now-tag mono">BUILDING</span><span>Minimalism launcher (Flutter)</span></li>
+          <li><span class="now-tag mono">TINKERING</span><span>Hyprland rice on CachyOS</span></li>
+          <li><span class="now-tag mono">READING</span><span>Digital Minimalism — Cal Newport</span></li>
+        </ul>
+      </article>
+
+      <article class="widget age-widget">
+        <p class="widget-label">AGE</p>
+        <p class="age-number mono" id="ageDisplay">--</p>
+        <p class="widget-sub">BORN 13.02.2007</p>
+      </article>
+
+      <article class="widget clock-widget dot-bg">
+        <p class="widget-label">LOCK SCREEN</p>
+        <div class="clock-stack mono">
+          <span id="clockHours">00</span>
+          <span id="clockMinutes">00</span>
+          <span id="clockSeconds">00</span>
+        </div>
+        <p class="clock-date mono" id="clockDate">— — —</p>
+      </article>
+
+    </section>
+
+    <!-- ============ SECTION 02 — PHILOSOPHY ============ -->
+    <div class="section-divider">
+      <span class="divider-index mono">/// 02</span>
+      <span class="divider-line"></span>
+      <span class="divider-title mono">PHILOSOPHY</span>
+    </div>
+
+    <section class="bento-grid" id="philosophy">
+
+      <article class="widget manifesto-widget dot-bg" data-cursor="hover">
+        <p class="widget-label">MANIFESTO</p>
+        <h2 class="manifesto-text">Less software.<br>More intention.</h2>
+        <p class="manifesto-sub">
+          I don't rice my desktop to look pretty in a screenshot — I do it to remove every
+          layer standing between me and the thing I'm actually trying to build. A quiet
+          system is a system I can think in.
+        </p>
+      </article>
+
+      <article class="widget principles-widget" data-cursor="hover">
+        <p class="widget-label">PRINCIPLES</p>
+        <ul class="principle-list">
+          <li><span class="principle-index mono">01</span>Remove before you add.</li>
+          <li><span class="principle-index mono">02</span>Automate the boring, own the interesting.</li>
+          <li><span class="principle-index mono">03</span>Self-host what you can. Depend less.</li>
+          <li><span class="principle-index mono">04</span>Open source is a default, not an afterthought.</li>
+        </ul>
+      </article>
+
+    </section>
+
+    <!-- ============ SECTION 03 — SYSTEM ============ -->
+    <div class="section-divider">
+      <span class="divider-index mono">/// 03</span>
+      <span class="divider-line"></span>
+      <span class="divider-title mono">SYSTEM</span>
+    </div>
+
+    <section class="bento-grid" id="system">
+
+      <article class="widget neofetch-widget dot-bg" data-cursor="hover">
+        <p class="widget-label">SYSTEM INFO</p>
+        <p class="neofetch-user mono">indra<span class="accent">@</span>portfolio</p>
+        <div class="neofetch-divider"></div>
+        <div class="neofetch-row"><span class="neofetch-key mono">OS</span><span class="neofetch-val mono">CachyOS Linux x86_64</span></div>
+        <div class="neofetch-row"><span class="neofetch-key mono">Kernel</span><span class="neofetch-val mono">Linux 6.x-cachyos</span></div>
+        <div class="neofetch-row"><span class="neofetch-key mono">WM</span><span class="neofetch-val mono">Hyprland (Wayland)</span></div>
+        <div class="neofetch-row"><span class="neofetch-key mono">Shell</span><span class="neofetch-val mono">zsh</span></div>
+        <div class="neofetch-row"><span class="neofetch-key mono">Theme</span><span class="neofetch-val mono">hyprdots [Bocchi]</span></div>
+        <div class="neofetch-row"><span class="neofetch-key mono">GPU</span><span class="neofetch-val mono">NVIDIA GTX 1050 Ti</span></div>
+      </article>
+
+      <article class="widget uptime-widget" data-cursor="hover">
+        <p class="widget-label">SESSION UPTIME</p>
+        <p class="uptime-number mono live-uptime">00:00:00</p>
+        <p class="widget-sub">SINCE PAGE LOADED</p>
+      </article>
+
+      <article class="widget stack-widget" data-cursor="hover">
+        <p class="widget-label">SELF-HOSTED STACK</p>
+        <div class="service-list">
+          <div class="service-row"><span class="service-dot"></span><span class="mono">nginx</span><span class="service-role mono">PROXY</span></div>
+          <div class="service-row"><span class="service-dot"></span><span class="mono">docker</span><span class="service-role mono">CONTAINERS</span></div>
+          <div class="service-row"><span class="service-dot"></span><span class="mono">pi-hole</span><span class="service-role mono">DNS</span></div>
+          <div class="service-row"><span class="service-dot"></span><span class="mono">jellyfin</span><span class="service-role mono">MEDIA</span></div>
+        </div>
+      </article>
+
+      <article class="widget tech-widget" data-cursor="hover">
+        <p class="widget-label">TECH STACK</p>
+        <div class="tech-pills">
+          <div class="pill" data-cursor="hover"><span class="pill-dot"></span>Ubuntu Server</div>
+          <div class="pill" data-cursor="hover"><span class="pill-dot"></span>Linux</div>
+          <div class="pill" data-cursor="hover"><span class="pill-dot"></span>Laravel</div>
+          <div class="pill" data-cursor="hover"><span class="pill-dot"></span>Docker</div>
+          <div class="pill" data-cursor="hover"><span class="pill-dot"></span>Nginx</div>
+          <div class="pill" data-cursor="hover"><span class="pill-dot"></span>Git</div>
+          <div class="pill" data-cursor="hover"><span class="pill-dot"></span>Bash</div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ============ SECTION 04 — SKILLS ============ -->
+    <div class="section-divider">
+      <span class="divider-index mono">/// 04</span>
+      <span class="divider-line"></span>
+      <span class="divider-title mono">SKILLS</span>
+    </div>
+
+    <section class="bento-grid" id="skills">
+
+      <article class="widget skills-widget" data-cursor="hover">
+        <p class="widget-label">SYSTEMS &amp; SERVER</p>
+        <div class="skill-row"><span class="skill-name">Linux / Bash</span><div class="skill-dots" data-level="4" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">Ubuntu Server</span><div class="skill-dots" data-level="4" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">Docker</span><div class="skill-dots" data-level="3" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">Networking Basics</span><div class="skill-dots" data-level="3" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">Hyprland / WM Config</span><div class="skill-dots" data-level="4" data-max="5"></div></div>
+      </article>
+
+      <article class="widget skills-widget" data-cursor="hover">
+        <p class="widget-label">WEB DEVELOPMENT</p>
+        <div class="skill-row"><span class="skill-name">PHP / Laravel</span><div class="skill-dots" data-level="4" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">MySQL</span><div class="skill-dots" data-level="3" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">JavaScript (ES6+)</span><div class="skill-dots" data-level="3" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">HTML / CSS</span><div class="skill-dots" data-level="4" data-max="5"></div></div>
+        <div class="skill-row"><span class="skill-name">Git</span><div class="skill-dots" data-level="4" data-max="5"></div></div>
+      </article>
+
+    </section>
+
+    <!-- ============ SECTION 05 — PROJECTS ============ -->
+    <div class="section-divider">
+      <span class="divider-index mono">/// 05</span>
+      <span class="divider-line"></span>
+      <span class="divider-title mono">PROJECTS</span>
+    </div>
+
+    <section class="bento-grid projects-grid" id="projects">
+
+      <article class="widget project-widget" data-cursor="hover">
+        <p class="widget-label mono">01 / PROJECT</p>
+        <h3 class="project-title">FST UPITRA System</h3>
+        <p class="project-desc">Dynamic PHP native + MySQL web application with admin authentication, CRUD operations, and AJAX interactions.</p>
+        <div class="project-tags"><span>PHP</span><span>MySQL</span><span>AJAX</span></div>
+      </article>
+
+      <article class="widget project-widget" data-cursor="hover">
+        <p class="widget-label mono">02 / PROJECT</p>
+        <h3 class="project-title">Minimal Launcher</h3>
+        <p class="project-desc">Flutter Android launcher built around digital minimalism — text-based UI, per-app time limits, friction screens.</p>
+        <div class="project-tags"><span>Flutter</span><span>Android</span><span>Dart</span></div>
+      </article>
+
+      <article class="widget project-widget" data-cursor="hover">
+        <p class="widget-label mono">03 / PROJECT</p>
+        <h3 class="project-title">Hyprland Rice</h3>
+        <p class="project-desc">Custom CachyOS + Hyprland desktop setup with NVIDIA-specific fixes, built on a community dotfiles base.</p>
+        <div class="project-tags"><span>Linux</span><span>Hyprland</span><span>Wayland</span></div>
+      </article>
+
+      <article class="widget project-widget" data-cursor="hover">
+        <p class="widget-label mono">04 / PROJECT</p>
+        <h3 class="project-title">Homelab Dashboard</h3>
+        <p class="project-desc">Self-hosted status board for personal server containers — uptime checks, resource usage, single-page view.</p>
+        <div class="project-tags"><span>Docker</span><span>Node.js</span><span>WebSocket</span></div>
+      </article>
+
+      <article class="widget project-widget" data-cursor="hover">
+        <p class="widget-label mono">05 / PROJECT</p>
+        <h3 class="project-title">Dotfiles Repository</h3>
+        <p class="project-desc">Public, version-controlled config for zsh, Hyprland, and terminal tooling — reproducible setup in one clone.</p>
+        <div class="project-tags"><span>Shell</span><span>Config</span><span>Open Source</span></div>
+      </article>
+
+    </section>
+
+    <!-- ============ SECTION 06 — JOURNEY ============ -->
+    <div class="section-divider">
+      <span class="divider-index mono">/// 06</span>
+      <span class="divider-line"></span>
+      <span class="divider-title mono">JOURNEY</span>
+    </div>
+
+    <section class="bento-grid" id="journey">
+
+      <article class="widget timeline-widget" data-cursor="hover">
+        <p class="widget-label">TIMELINE</p>
+        <div class="timeline">
+          <div class="timeline-item">
+            <span class="timeline-marker"></span>
+            <div class="timeline-content">
+              <p class="timeline-year mono">2023</p>
+              <p class="timeline-text">Started the Software Engineering program — first lines of PHP, first taste of web development.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-marker"></span>
+            <div class="timeline-content">
+              <p class="timeline-year mono">2024</p>
+              <p class="timeline-text">Switched my daily driver to Linux, then fell down the tiling window manager and ricing rabbit hole.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-marker"></span>
+            <div class="timeline-content">
+              <p class="timeline-year mono">2025</p>
+              <p class="timeline-text">Started self-hosting — first home server, first Docker container, first late-night Nginx config debugging.</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <span class="timeline-marker"></span>
+            <div class="timeline-content">
+              <p class="timeline-year mono">2026</p>
+              <p class="timeline-text">Now building tools rooted in digital minimalism — software that respects attention instead of competing for it.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ============ SECTION 07 — CONTACT ============ -->
+    <div class="section-divider">
+      <span class="divider-index mono">/// 07</span>
+      <span class="divider-line"></span>
+      <span class="divider-title mono">CONTACT</span>
+    </div>
+
+    <section class="bento-grid" id="contact">
+
+      <article class="widget contact-widget" data-cursor="hover">
+        <p class="widget-label">CONTACT</p>
+        <h3 class="contact-title">Let's build<br>something.</h3>
+        <div class="contact-links">
+          <a href="mailto:hello@example.com" class="contact-link" data-cursor="hover">Email <span>↗</span></a>
+          <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link" data-cursor="hover">GitHub <span>↗</span></a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener" class="contact-link" data-cursor="hover">LinkedIn <span>↗</span></a>
+        </div>
+      </article>
+
+      <article class="widget meta-widget" data-cursor="hover">
+        <p class="widget-label">BUILT WITH</p>
+        <div class="meta-list mono">
+          <span># vanilla-html</span>
+          <span># vanilla-css</span>
+          <span># vanilla-js</span>
+          <span># zero-frameworks</span>
+          <span># zero-tracking</span>
+        </div>
+      </article>
+
+      <footer class="widget footer-widget">
+        <p class="footer-text">© <span id="year"></span> Indragiri Bhakti — Designed with Nothing-inspired minimalism.</p>
+      </footer>
+
+    </section>
+
+  </main>
+
+</body>
+</html>
