@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indragiri Bhakti — Portfolio</title>
+<meta name="description" content="Indragiri Bhakti — Software Engineering Student. Linux, self-hosting, and digital minimalism.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;500;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<style>
+/* ===================================================
+   ROOT VARIABLES — NOTHING OS THEME
+=================================================== */
+:root {
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+  --gap: 20px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-theme="dark"] {
+  --bg: #000000;
+  --surface: #111111;
+  --surface-alt: #1a1a1a;
+  --border: #222222;
+  --border-strong: #333333;
+  --text: #ffffff;
+  --text-secondary: #999999;
+  --accent: #ff5d5d;
+  --accent-soft: rgba(255, 93, 93, 0.12);
+  --dot-color: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #f4f4f4;
+  --surface-alt: #ececec;
+  --border: #dddddd;
+  --border-strong: #cccccc;
+  --text: #000000;
+  --text-secondary: #666666;
+  --accent: #ff3b3b;
+  --accent-soft: rgba(255, 59, 59, 0.08);
+  --dot-color: rgba(0, 0, 0, 0.04);
+}
+
+/* Base Reset & Typography */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  line-height: 1.5;
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+.mono { font-family: 'Share Tech Mono', monospace; }
+a { color: inherit; text-decoration: none; }
+
+/* Custom Cursor & Grid Dot Base */
+.dot-bg {
+  background-image: radial-gradient(var(--dot-color) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0; border-radius: 50%; pointer-events: none; z-index: 9999; opacity: 0; transition: opacity 0.3s ease, transform 0.1s ease, width 0.3s, height 0.3s;
+}
+.cursor-dot { width: 6px; height: 6px; background: var(--accent); }
+.cursor-ring { width: 34px; height: 34px; border: 1px solid var(--accent); opacity: 0.4; }
+.cursor-dot.cursor-hover { transform: scale(2.5) translate(-20%, -20%); background: transparent; border: 1px solid var(--accent); }
+.cursor-ring.cursor-hover { transform: scale(1.5) translate(-15%, -15%); background: var(--accent-soft); border-color: transparent; }
+
+/* Topbar & Elements */
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 30px 40px 10px; max-width: 1400px; margin: 0 auto; }
+.logo { font-family: 'Share Tech Mono', monospace; font-size: 20px; font-weight: 700; letter-spacing: 1px; }
+.accent { color: var(--accent); }
+.theme-toggle { background: var(--surface); border: 1px solid var(--border); padding: 8px 16px; border-radius: 30px; display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; cursor: pointer; color: var(--text); transition: background 0.2s; }
+.theme-toggle:hover { background: var(--surface-alt); }
+.toggle-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+
+.glyph-strip { max-width: 1400px; margin: 0 auto; padding: 15px 40px; font-size: 12px; color: var(--text-secondary); letter-spacing: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; opacity: 0.5; }
+
+/* Dot Navigation Sidebar */
+.dot-nav { position: fixed; right: 40px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 18px; z-index: 100; }
+.dot-nav-item { background: none; border: none; display: flex; align-items: center; justify-content: flex-end; position: relative; cursor: pointer; padding: 5px 0; }
+.dot-nav-dot { width: 6px; height: 6px; background: var(--border-strong); border-radius: 50%; transition: all 0.3s var(--ease); }
+.dot-nav-label { position: absolute; right: 20px; font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-secondary); opacity: 0; transform: translateX(10px); transition: all 0.3s var(--ease); pointer-events: none; white-space: nowrap; }
+.dot-nav-item:hover .dot-nav-label, .dot-nav-item.active .dot-nav-label { opacity: 1; transform: translateX(0); }
+.dot-nav-item:hover .dot-nav-dot { background: var(--text); transform: scale(1.5); }
+.dot-nav-item.active .dot-nav-dot { background: var(--accent); transform: scale(2); }
+
+/* Layout Structure & Bento Grid */
+.section-divider { display: flex; align-items: center; gap: 20px; max-width: 1400px; margin: 60px auto 24px; padding: 0 40px; }
+.divider-index { font-size: 14px; color: var(--accent); font-weight: bold; }
+.divider-line { flex-grow: 1; height: 1px; background: var(--border); }
+.divider-title { font-size: 14px; color: var(--text-secondary); letter-spacing: 1px; font-weight: 600; }
+
+.bento-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--gap); max-width: 1400px; margin: 0 auto; padding: 0 40px 40px; }
+.widget { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; display: flex; flex-direction: column; position: relative; overflow: hidden; transition: border-color 0.3s var(--ease), background-color 0.4s var(--ease); }
+.widget:hover { border-color: var(--border-strong); }
+.widget-label { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-secondary); letter-spacing: 1px; margin-bottom: 20px; text-transform: uppercase; }
+
+/* Original Widgets Styles */
+.hero-widget { grid-column: span 3; grid-row: span 2; justify-content: space-between; }
+.hero-title { font-size: clamp(32px, 5vw, 56px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; margin-bottom: 20px; }
+.hero-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.pill { background: var(--surface-alt); border: 1px solid var(--border); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+.now-widget { grid-column: span 1; grid-row: span 1; }
+.now-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.now-list li { display: flex; flex-direction: column; font-size: 14px; color: var(--text); }
+.now-tag { font-size: 10px; color: var(--accent); font-weight: bold; margin-bottom: 2px; }
+.age-widget, .clock-widget { grid-column: span 1; grid-row: span 1; justify-content: space-between; }
+.big-stat { font-size: 38px; font-weight: 700; font-family: 'Share Tech Mono', monospace; margin: auto 0; }
+.manifesto-widget { grid-column: span 2; grid-row: span 1; font-size: 16px; color: var(--text-secondary); line-height: 1.6; }
+.principles-widget { grid-column: span 2; grid-row: span 1; justify-content: space-between; }
+.principle-items { display: flex; flex-direction: column; gap: 10px; }
+.principle-item { font-size: 15px; font-weight: 500; display: flex; align-items: center; gap: 10px; }
+.neofetch-widget { grid-column: span 2; grid-row: span 1; gap: 6px; }
+.neofetch-row { display: flex; font-size: 14px; margin-bottom: 4px; }
+.neofetch-key { width: 100px; color: var(--accent); }
+.uptime-widget { grid-column: span 1; grid-row: span 1; }
+.stack-widget { grid-column: span 1; grid-row: span 1; }
+.tech-container { display: flex; flex-wrap: wrap; gap: 8px; }
+.tech-tag { font-size: 12px; background: var(--surface-alt); padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); }
+.project-widget { grid-column: span 2; grid-row: span 1; justify-content: space-between; min-height: 240px; }
+.project-title { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+.project-desc { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
+.project-link { font-size: 14px; font-weight: 600; color: var(--accent); display: inline-flex; align-items: center; gap: 4px; margin-top: auto; }
+.timeline-widget { grid-column: span 4; }
+.timeline { display: flex; flex-direction: column; gap: 24px; position: relative; }
+.timeline-item { display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 16px; }
+.timeline-left { display: flex; flex-direction: column; }
+.timeline-role { font-size: 16px; font-weight: 700; }
+.timeline-company { font-size: 14px; color: var(--text-secondary); }
+.timeline-date { font-family: 'Share Tech Mono', monospace; font-size: 14px; color: var(--accent); }
+.contact-widget { grid-column: span 2; justify-content: space-between; }
+.contact-title { font-size: 32px; font-weight: 800; }
+.contact-links { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+.contact-link { display: flex; justify-content: space-between; padding: 12px 16px; background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); font-weight: 600; }
+.meta-widget { grid-column: span 2; }
+.meta-list { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--text-secondary); }
+.footer-widget { grid-column: span 4; text-align: center; padding: 24px; color: var(--text-secondary); font-size: 12px; border: none; background: none; }
+
+/* ===================================================
+   NEW ADDED SECTIONS WIDGETS
+=================================================== */
+/* Section 06: Workspace Grid placements */
+.hardware-widget { grid-column: span 2; grid-row: span 1; }
+.audio-widget { grid-column: span 1; grid-row: span 1; justify-content: center; align-items: center; text-align: center; }
+.gear-widget { grid-column: span 1; grid-row: span 1; }
+
+.audio-visualizer { display: flex; gap: 5px; align-items: flex-end; height: 28px; justify-content: center; }
+.audio-visualizer .bar { width: 5px; background: var(--accent); border-radius: 2px; animation: soundBounce 1.2s ease-in-out infinite alternate; }
+.audio-visualizer .bar:nth-child(1) { height: 60%; animation-delay: 0.1s; }
+.audio-visualizer .bar:nth-child(2) { height: 100%; animation-delay: 0.3s; }
+.audio-visualizer .bar:nth-child(3) { height: 40%; animation-delay: 0.0s; }
+.audio-visualizer .bar:nth-child(4) { height: 80%; animation-delay: 0.2s; }
+
+@keyframes soundBounce { 0% { height: 20%; } 100% { height: 100%; } }
+
+/* Section 07: Services */
+.service-card { grid-column: span 2; justify-content: space-between; }
+.service-icon { font-size: 24px; color: var(--accent); margin-bottom: 12px; font-family: 'Share Tech Mono', monospace; }
+
+/* Section 08: Certifications & Stats */
+.cert-widget { grid-column: span 2; }
+.cert-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed var(--border); font-size: 14px; }
+.cert-item:last-child { border-bottom: none; }
+.cert-issuer { color: var(--text-secondary); font-size: 12px; }
+.stat-bar-widget { grid-column: span 1; }
+.stat-bar-wrapper { margin-top: 10px; display: flex; flex-direction: column; gap: 14px; }
+.progress-container { width: 100%; }
+.progress-labels { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; color: var(--text-secondary); }
+.progress-bg { width: 100%; height: 6px; background: var(--surface-alt); border-radius: 3px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 3px; }
+
+/* ===================================================
+   RESPONSIVE — TABLET & MOBILE
+=================================================== */
+@media (max-width: 1024px) {
+  .bento-grid { grid-template-columns: repeat(2, 1fr); padding: 0 24px 24px; }
+  .hero-widget, .timeline-widget, .footer-widget { grid-column: span 2; }
+  .manifesto-widget, .principles-widget, .neofetch-widget, .project-widget, .contact-widget, .meta-widget, .hardware-widget, .service-card, .cert-widget { grid-column: span 2; }
+  .now-widget, .age-widget, .clock-widget, .uptime-widget, .stack-widget, .audio-widget, .gear-widget, .stat-bar-widget { grid-column: span 1; }
+  .dot-nav { display: none; }
+}
+
+@media (max-width: 640px) {
+  :root { --gap: 14px; }
+  .topbar { padding: 20px 18px 8px; }
+  .glyph-strip { padding: 10px 18px; }
+  .section-divider { margin: 40px 18px 16px; padding: 0 18px; }
+  .bento-grid { grid-template-columns: 1fr; padding: 0 18px; }
+  .widget, .hero-widget, .now-widget, .age-widget, .clock-widget, .manifesto-widget, .principles-widget, .neofetch-widget, .uptime-widget, .stack-widget, .tech-widget, .skills-widget, .project-widget, .timeline-widget, .contact-widget, .meta-widget, .footer-widget, .hardware-widget, .audio-widget, .gear-widget, .service-card, .cert-widget, .stat-bar-widget { grid-column: span 1; grid-row: span 1; }
+  .widget { padding: 22px; border-radius: var(--radius-md); }
+  .hero-title { font-size: 28px; }
+  .big-stat { font-size: 32px; }
+}
+</style>
+</head>
+<body>
+
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <div class="glyph-strip" id="glyphStrip"></div>
+
+  <header class="topbar">
+    <div class="logo">INDRA<span class="accent">.</span></div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle light/dark theme" data-cursor="hover">
+      <span class="toggle-dot"></span>
+      <span id="toggleLabel" class="mono">DARK</span>
+    </button>
+  </header>
+
+  <nav class="dot-nav" id="dotNav">
+    <button class="dot-nav-item active" data-target="profile" data-cursor="hover" aria-label="Go to Profile"><span class="dot-nav-dot"></span><span class="dot-nav-label">PROFILE</span></button>
+    <button class="dot-nav-item" data-target="philosophy" data-cursor="hover" aria-label="Go to Philosophy"><span class="dot-nav-dot"></span><span class="dot-nav-label">PHILOSOPHY</span></button>
+    <button class="dot-nav-item" data-target="stack" data-cursor="hover" aria-label="Go to Stack"><span class="dot-nav-dot"></span><span class="dot-nav-label">TECH STACK</span></button>
+    <button class="dot-nav-item" data-target="projects" data-cursor="hover" aria-label="Go to Projects"><span class="dot-nav-dot"></span><span class="dot-nav-label">PROJECTS</span></button>
+    <button class="dot-nav-item" data-target="workspace" data-cursor="hover" aria-label="Go to Workspace"><span class="dot-nav-dot"></span><span class="dot-nav-label">WORKSPACE</span></button>
+    <button class="dot-nav-item" data-target="services" data-cursor="hover" aria-label="Go to Services"><span class="dot-nav-dot"></span><span class="dot-nav-label">SERVICES</span></button>
+    <button class="dot-nav-item" data-target="certs" data-cursor="hover" aria-label="Go to Certifications"><span class="dot-nav-dot"></span><span class="dot-nav-label">CREDENTIALS</span></button>
+    <button class="dot-nav-item" data-target="journey" data-cursor="hover" aria-label="Go to Journey"><span class="dot-nav-dot"></span><span class="dot-nav-label">JOURNEY</span></button>
+    <button class="dot-nav-item" data-target="contact" data-cursor="hover" aria-label="Go to Contact"><span class="dot-nav-dot"></span><span class="dot-nav-label">CONTACT</span></button>
+  </nav>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 01</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">PROFILE</span>
+  </div>
+
+  <main class="bento-grid" id="profile">
+    <article class="widget hero-widget">
+      <div>
+        <p class="widget-label">INTRODUCTION</p>
+        <h1 class="hero-title">Indragiri Bhakti<br><span class="text-secondary">Software Engineering Student.</span></h1>
+        <p style="color: var(--text-secondary); max-width: 540px; font-size: 15px;">Focusing on Linux ricing, secure self-hosting infrastructure, architectures, and intentional digital minimalism.</p>
+      </div>
+      <div class="hero-pills">
+        <span class="pill">Sysadmin</span>
+        <span class="pill">Backend Dev</span>
+        <span class="pill">Linux Enthusiast</span>
+        <span class="pill">Minimalist</span>
+      </div>
+    </article>
+
+    <article class="widget now-widget dot-bg" data-cursor="hover">
+      <p class="widget-label">NOW</p>
+      <ul class="now-list">
+        <li><span class="now-tag mono">LEARNING</span><span>Docker & CI/CD</span></li>
+        <li><span class="now-tag mono">READING</span><span>Digital Minimalism</span></li>
+        <li><span class="now-tag mono">STATUS</span><span>Open to Freelance</span></li>
+      </ul>
+    </article>
+
+    <article class="widget age-widget" data-cursor="hover">
+      <p class="widget-label">AGE</p>
+      <div class="big-stat" id="ageDisplay">00.000000000</div>
+      <p style="font-size: 11px; color: var(--text-secondary);" class="mono">LIVE COUNTER</p>
+    </article>
+
+    <article class="widget clock-widget" data-cursor="hover">
+      <p class="widget-label">LOCAL TIME</p>
+      <div class="big-stat" id="clockDisplay">00:00:00</div>
+      <p style="font-size: 11px; color: var(--text-secondary);" class="mono">WIB / GMT+7</p>
+    </article>
+  </main>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 02</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">PHILOSOPHY</span>
+  </div>
+
+  <section class="bento-grid" id="philosophy">
+    <article class="widget manifesto-widget">
+      <p class="widget-label">MANIFESTO</p>
+      <p>Computers should adapt to humans, not the other way around. I build interfaces that are clear and clean, omitting bloatware. My setups utilize keyboard-driven workflows to guarantee speed and focus, minimizing friction between thought and production.</p>
+    </article>
+
+    <article class="widget principles-widget">
+      <p class="widget-label">CORE PRINCIPLES</p>
+      <div class="principle-items">
+        <div class="principle-item"><span class="accent mono">[1]</span> Functional Aesthetics</div>
+        <div class="principle-item"><span class="accent mono">[2]</span> Offline-First Mindset</div>
+        <div class="principle-item"><span class="accent mono">[3]</span> Extreme Keyboard Efficiency</div>
+      </div>
+    </article>
+  </section>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 03</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">TECH STACK</span>
+  </div>
+
+  <section class="bento-grid" id="stack">
+    <article class="widget neofetch-widget" data-cursor="hover">
+      <p class="widget-label">ENVIRONMENT</p>
+      <div class="neofetch-row"><span class="neofetch-key mono">OS</span><span class="neofetch-val mono">Arch Linux x86_64</span></div>
+      <div class="neofetch-row"><span class="neofetch-key mono">WM</span><span class="neofetch-val mono">Hyprland (Wayland)</span></div>
+      <div class="neofetch-row"><span class="neofetch-key mono">Shell</span><span class="neofetch-val mono">Zsh + Starship</span></div>
+      <div class="neofetch-row"><span class="neofetch-key mono">Editor</span><span class="neofetch-val mono">Neovim (LazyVim)</span></div>
+    </article>
+
+    <article class="widget uptime-widget">
+      <p class="widget-label">INFRASTRUCTURE</p>
+      <div class="tech-container">
+        <span class="tech-tag">Docker</span>
+        <span class="tech-tag">Nginx</span>
+        <span class="tech-tag">Proxmox</span>
+        <span class="tech-tag">Cloudflare</span>
+      </div>
+    </article>
+
+    <article class="widget stack-widget">
+      <p class="widget-label">LANGUAGES</p>
+      <div class="tech-container">
+        <span class="tech-tag">Go</span>
+        <span class="tech-tag">Node.js</span>
+        <span class="tech-tag">TypeScript</span>
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">HTML/CSS</span>
+      </div>
+    </article>
+  </section>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 04</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">SELECTED PROJECTS</span>
+  </div>
+
+  <section class="bento-grid" id="projects">
+    <article class="widget project-widget" data-cursor="hover">
+      <div>
+        <p class="widget-label">SELF-HOSTED / NETWORK</p>
+        <h3 class="project-title">Dotfiles & Hyprland Rice</h3>
+        <p class="project-desc">Fully customized keyboard-driven Arch Linux configuration featuring Hyprland, Waybar, and custom rofi scripts.</p>
+      </div>
+      <a href="#" class="project-link">View Repository <span>↗</span></a>
+    </article>
+
+    <article class="widget project-widget" data-cursor="hover">
+      <div>
+        <p class="widget-label">BACKEND APPLICATION</p>
+        <h3 class="project-title">Homelab Monitoring Agent</h3>
+        <p class="project-desc">Lightweight metrics daemon written in Go, streaming server metrics into a self-hosted TUI dashboard via gRPC.</p>
+      </div>
+      <a href="#" class="project-link">View Source <span>↗</span></a>
+    </article>
+  </section>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 05</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">WORKSPACE & GEAR</span>
+  </div>
+
+  <section class="bento-grid" id="workspace">
+    <article class="widget hardware-widget" data-cursor="hover">
+      <p class="widget-label">HARDWARE SPECTRA</p>
+      <div class="neofetch-row"><span class="neofetch-key mono">HOST</span><span class="neofetch-val mono">ThinkPad X1 Carbon Gen 9</span></div>
+      <div class="neofetch-row"><span class="neofetch-key mono">CPU</span><span class="neofetch-val mono">Intel i7-1185G7 (8) @ 4.8GHz</span></div>
+      <div class="neofetch-row"><span class="neofetch-key mono">RAM</span><span class="neofetch-val mono">32GB LPDDR4x</span></div>
+      <div class="neofetch-row"><span class="neofetch-key mono">STORAGE</span><span class="neofetch-val mono">1TB NVMe Samsung EVO</span></div>
+    </article>
+
+    <article class="widget audio-widget dot-bg" data-cursor="hover">
+      <p class="widget-label">NOW PLAYING</p>
+      <div class="audio-visualizer">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+      <p class="project-title" style="margin-top: 14px; margin-bottom: 4px; font-size: 15px;">Ambient Noise</p>
+      <p style="margin-top: 0; font-size: 12px; color:var(--text-secondary)">self-hosted stream</p>
+    </article>
+
+    <article class="widget gear-widget" data-cursor="hover">
+      <p class="widget-label">PERIPHERALS</p>
+      <ul class="now-list">
+        <li><span class="now-tag mono">KEYBOARD</span><span>Planck EZ (Ortholinear)</span></li>
+        <li><span class="now-tag mono">AUDIO</span><span>Sennheiser HD 560S</span></li>
+      </ul>
+    </article>
+  </section>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 06</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">SERVICES</span>
+  </div>
+
+  <section class="bento-grid" id="services">
+    <article class="widget service-card" data-cursor="hover">
+      <div>
+        <div class="service-icon">[01]</div>
+        <h3 class="project-title">Backend Architecture</h3>
+        <p class="project-desc">Mendesain RESTful API & gRPC yang cepat, aman, dan modular menggunakan Go atau Node.js dengan database terisolasi.</p>
+      </div>
+    </article>
+
+    <article class="widget service-card" data-cursor="hover">
+      <div>
+        <div class="service-icon">[02]</div>
+        <h3 class="project-title">Linux Sysadmin & Homelab</h3>
+        <p class="project-desc">Setup infrastruktur server lokal/cloud mandiri (self-hosting), manajemen kontainer Docker, reverse proxy, dan hardened firewall.</p>
+      </div>
+    </article>
+  </section>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 07</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">CREDENTIALS & STATS</span>
+  </div>
+
+  <section class="bento-grid" id="certs">
+    <article class="widget cert-widget">
+      <p class="widget-label">CERTIFICATIONS</p>
+      <div class="cert-item">
+        <div>
+          <div>Linux Foundation Certified IT Associate</div>
+          <div class="cert-issuer">The Linux Foundation</div>
+        </div>
+        <div class="mono accent">2025</div>
+      </div>
+      <div class="cert-item">
+        <div>
+          <div>AWS Certified Cloud Practitioner</div>
+          <div class="cert-issuer">Amazon Web Services</div>
+        </div>
+        <div class="mono accent">2025</div>
+      </div>
+    </article>
+
+    <article class="widget stat-bar-widget">
+      <p class="widget-label">RESOURCE MONITOR</p>
+      <div class="stat-bar-wrapper">
+        <div class="progress-container">
+          <div class="progress-labels"><span class="mono">VIM EFFICIENCY</span><span class="mono">94%</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 94%;"></div></div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-labels"><span class="mono">HOMELAB UPTIME</span><span class="mono">99.98%</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 99.98%;"></div></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="widget stat-bar-widget">
+      <p class="widget-label">LANGUAGE SHARE</p>
+      <div class="stat-bar-wrapper">
+        <div class="progress-container">
+          <div class="progress-labels"><span class="mono">GO / BACKEND</span><span class="mono">65%</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 65%;"></div></div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-labels"><span class="mono">SHELL SCRIPT</span><span class="mono">35%</span></div>
+          <div class="progress-bg"><div class="progress-fill" style="width: 35%;"></div></div>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 08</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">JOURNEY</span>
+  </div>
+
+  <section class="bento-grid" id="journey">
+    <article class="widget timeline-widget">
+      <p class="widget-label">TIMELINE</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <span class="timeline-role">Independent Homelab Experimenter</span>
+            <span class="timeline-company">Self-driven Infrastructure Project</span>
+          </div>
+          <span class="timeline-date">2023 — PRESENT</span>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-left">
+            <span class="timeline-role">Software Engineering Student</span>
+            <span class="timeline-company">Vocational / Academic Study</span>
+          </div>
+          <span class="timeline-date">2022 — PRESENT</span>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <div class="section-divider">
+    <span class="divider-index mono">/// 09</span>
+    <span class="divider-line"></span>
+    <span class="divider-title mono">CONTACT</span>
+  </div>
+
+  <section class="bento-grid" id="contact">
+    <article class="widget contact-widget" data-cursor="hover">
+      <p class="widget-label">CONTACT</p>
+      <h3 class="contact-title">Let's build<br>something.</h3>
+      <div class="contact-links">
+        <a href="mailto:hello@example.com" class="contact-link" data-cursor="hover">Email <span>↗</span></a>
+        <a href="https://github.com/" target="_blank" rel="noopener" class="contact-link" data-cursor="hover">GitHub <span>↗</span></a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener" class="contact-link" data-cursor="hover">LinkedIn <span>↗</span></a>
+      </div>
+    </article>
+
+    <article class="widget meta-widget" data-cursor="hover">
+      <p class="widget-label">BUILT WITH</p>
+      <div class="meta-list mono">
+        <span># vanilla-html</span>
+        <span># vanilla-css</span>
+        <span># vanilla-js</span>
+        <span># zero-frameworks</span>
+        <span># zero-tracking</span>
+      </div>
+    </article>
+
+    <footer class="widget footer-widget">
+      <p class="mono">© 2026 INDRAGIRI BHAKTI. ALL RIGHTS RESERVED. IN INTENTIONAL SIMPLICITY.</p>
+    </footer>
+  </section>
+
+  <script>
+  function pad(num) {
+    return num.toString().padStart(2, '0');
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+
+    /* 1. THEME TOGGLE (DARK / LIGHT) */
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const toggleLabel = document.getElementById('toggleLabel');
+
+    function applyTheme(theme) {
+      root.setAttribute('data-theme', theme);
+      toggleLabel.textContent = theme === 'light' ? 'LIGHT' : 'DARK';
+      localStorage.setItem('portfolio-theme', theme);
+    }
+
+    const savedTheme = localStorage.getItem('portfolio-theme');
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    applyTheme(savedTheme || (prefersLight ? 'light' : 'dark'));
+
+    themeToggle.addEventListener('click', () => {
+      const current = root.getAttribute('data-theme');
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    /* 2. DYNAMIC AGE CALCULATOR */
+    const birthDate = new Date('2007-02-13T00:00:00');
+    const ageDisplay = document.getElementById('ageDisplay');
+    if (ageDisplay) {
+      setInterval(() => {
+        const now = new Date();
+        const diffMs = now - birthDate;
+        const age = diffMs / (1000 * 60 * 60 * 24 * 365.25);
+        ageDisplay.textContent = age.toFixed(9);
+      }, 50);
+    }
+
+    /* 3. CLOCK DISPLAY */
+    const clockDisplay = document.getElementById('clockDisplay');
+    if (clockDisplay) {
+      setInterval(() => {
+        const now = new Date();
+        clockDisplay.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+      }, 1000);
+    }
+
+    /* 4. GLYPH STRIP BACKGROUND TICKER */
+    const glyphStrip = document.getElementById('glyphStrip');
+    if (glyphStrip) {
+      const glyphs = ['•', '°', '※', '⌨', '⚡', '⧉', '⬡', '⌗', '///', '01', 'X', 'Ø', '■'];
+      let content = '';
+      for (let i = 0; i < 40; i++) {
+        content += glyphs[Math.floor(Math.random() * glyphs.length)] + '   ';
+      }
+      glyphStrip.textContent = content;
+    }
+
+    /* 5. INTERSECTION OBSERVER FOR SIDEBAR NAVIGATION */
+    const sections = document.querySelectorAll('main.bento-grid, section.bento-grid');
+    const navItems = document.querySelectorAll('.dot-nav-item');
+
+    const observerOptions = { root: null, rootMargin: '-40% 0px -40% 0px', threshold: 0 };
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.getAttribute('id');
+          navItems.forEach(item => {
+            if (item.getAttribute('data-target') === id) {
+              item.classList.add('active');
+            } else {
+              item.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach(section => observer.observe(section));
+
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetId = item.getAttribute('data-target');
+        const targetSec = document.getElementById(targetId);
+        if (targetSec) {
+          targetSec.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    });
+
+    /* 6. CUSTOM CURSOR CODE */
+    const cursorDot = document.getElementById('cursorDot');
+    const cursorRing = document.getElementById('cursorRing');
+
+    if (cursorDot && cursorRing && window.matchMedia('(pointer: fine)').matches) {
+      cursorDot.style.opacity = '1';
+      cursorRing.style.opacity = '0.4';
+
+      let mouseX = 0, mouseY = 0;
+      let ringX = 0, ringY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+      });
+
+      function animateRing() {
+        ringX += (mouseX - ringX) * 0.18;
+        ringY += (mouseY - ringY) * 0.18;
+        cursorRing.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+        requestAnimationFrame(animateRing);
+      }
+      animateRing();
+
+      function bindHoverTargets() {
+        const hoverTargets = document.querySelectorAll('[data-cursor="hover"], a, button, .pill');
+        hoverTargets.forEach((el) => {
+          el.addEventListener('mouseenter', () => {
+            cursorDot.classList.add('cursor-hover');
+            cursorRing.classList.add('cursor-hover');
+          });
+          el.addEventListener('mouseleave', () => {
+            cursorDot.classList.remove('cursor-hover');
+            cursorRing.classList.remove('cursor-hover');
+          });
+        });
+      }
+      bindHoverTargets();
+
+      document.addEventListener('mouseleave', () => {
+        cursorDot.style.opacity = '0';
+        cursorRing.style.opacity = '0';
+      });
+      document.addEventListener('mouseenter', () => {
+        cursorDot.style.opacity = '1';
+        cursorRing.style.opacity = '0.5';
+      });
+    } else if (cursorDot && cursorRing) {
+      cursorDot.style.display = 'none';
+      cursorRing.style.display = 'none';
+    }
+  });
+  </script>
+</body>
+</html>
